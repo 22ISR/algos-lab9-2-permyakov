@@ -1,4 +1,5 @@
 from tkinter import *
+import math
 root = Tk()
 root.geometry("800x500")
 root.title("Степан Калачев")
@@ -6,13 +7,33 @@ label = Label(root, text="Мат. расчеты Калачева", font=("Arial
 label.pack(padx=20, pady=20)
 textbox = Text(root, height=3, font=("Arial", 16))
 textbox.pack(padx=20, pady=20)
+textbox.delete("1.0", END)
 buttonFrame = Frame(root)
 
 def on_button_click(value):
     if value == "=":
-        print("Это равно")
+        try:
+            result = eval(textbox.get("1.0", END))
+            print(result)
+            textbox.delete("1.0", END)
+            textbox.insert(END, result)
+        except ZeroDivisionError:
+            print("Ошибка: Деление на ноль!")
+            textbox.delete("1.0", END)
+            textbox.insert(END, "Ошибка: Деление на ноль!")
+        except Exception as e:
+            textbox.delete("1.0", END)
+            textbox.insert(END, "Error")
+
+    elif value == "√":
+        kalach = eval(textbox.get("1.0", END))
+        sqrt_math = math.sqrt(kalach)
+        textbox.delete("1.0", END)
+        textbox.insert(END, sqrt_math)
+    elif value == "Clear":
+        textbox.delete("1.0", END)
     else:
-        print(value)
+        textbox.insert(END, value)
 
 buttonFrame.columnconfigure(0, weight=1)
 buttonFrame.columnconfigure(1, weight=1)
@@ -35,22 +56,30 @@ btn13 = Button(buttonFrame, text="Clear", font=("Arial", 18), command=lambda v="
 btn14 = Button(buttonFrame, text="0", font=("Arial", 18), command=lambda v="0": on_button_click(v))
 btn15 = Button(buttonFrame, text="=", font=("Arial", 18), command=lambda v="=": on_button_click(v))
 btn16 = Button(buttonFrame, text="/", font=("Arial", 18), command=lambda v="/": on_button_click(v))
+btn17 = Button(buttonFrame, text="(", font=("Arial", 18), command=lambda v="(": on_button_click(v))
+btn18 = Button(buttonFrame, text=")", font=("Arial", 18), command=lambda v=")": on_button_click(v))
+btn19 = Button(buttonFrame, text=".", font=("Arial", 18), command=lambda v=".": on_button_click(v))
+btn20 = Button(buttonFrame, text="√", font=("Arial", 18), command=lambda v="√": on_button_click(v))
 
-btn1.grid(row=0, column=0, sticky="we")
-btn2.grid(row=0, column=1, sticky="we")
-btn3.grid(row=0, column=2, sticky="we")
-btn4.grid(row=0, column=3, sticky="we")
-btn5.grid(row=1, column=0, sticky="we")
-btn6.grid(row=1, column=1, sticky="we")
-btn7.grid(row=1, column=2, sticky="we")
-btn8.grid(row=1, column=3, sticky="we")
-btn9.grid(row=2, column=0, sticky="we")
-btn10.grid(row=2, column=1, sticky="we")
-btn11.grid(row=2, column=2, sticky="we")
-btn12.grid(row=2, column=3, sticky="we")
-btn13.grid(row=3, column=0, sticky="we")
-btn14.grid(row=3, column=1, sticky="we")
-btn15.grid(row=3, column=2, sticky="we")
-btn16.grid(row=3, column=3, sticky="we")
+btn1.grid(row=1, column=0, sticky="we")
+btn2.grid(row=1, column=1, sticky="we")
+btn3.grid(row=1, column=2, sticky="we")
+btn4.grid(row=1, column=3, sticky="we")
+btn5.grid(row=2, column=0, sticky="we")
+btn6.grid(row=2, column=1, sticky="we")
+btn7.grid(row=2, column=2, sticky="we")
+btn8.grid(row=2, column=3, sticky="we")
+btn9.grid(row=3, column=0, sticky="we")
+btn10.grid(row=3, column=1, sticky="we")
+btn11.grid(row=3, column=2, sticky="we")
+btn12.grid(row=3, column=3, sticky="we")
+btn13.grid(row=4, column=0, sticky="we")
+btn14.grid(row=4, column=1, sticky="we")
+btn15.grid(row=4, column=2, sticky="we")
+btn16.grid(row=4, column=3, sticky="we")
+btn17.grid(row=0, column=0, sticky="we")
+btn18.grid(row=0, column=1, sticky="we")
+btn19.grid(row=0, column=2, sticky="we")
+btn20.grid(row=0, column=3, sticky="we")
 buttonFrame.pack(fill="x")
 root.mainloop()
